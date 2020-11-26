@@ -1,0 +1,31 @@
+.errors{
+    color:red;
+}
+
+body{
+    font-size: 20px;
+}
+
+table{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h2{
+    text-align: center;
+    font-size: 3em;
+}
+
+button{
+    margin: 3px;
+    border: 2px black solid;
+    background-color: yellow;
+    color: green;
+    padding: 4px;
+    font-size: 1.2em;
+}
+
+input{
+    padding: 2px;
+
+}

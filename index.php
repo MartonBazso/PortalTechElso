@@ -3,12 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Bejelentkezés</title>
-    <style>
-    .errors{
-        color:red;
-    }
-    </style>
 </head>
 <body>
     <h2>Jelentkezz be!</h2>
@@ -39,7 +35,7 @@
         <tr>
             <td></td>
             <td>
-             <input type="submit" name="submit" value="Belépés">
+             <button type="submit">Belépés</button>
             </td>
         </tr>
     </table>
