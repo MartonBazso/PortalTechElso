@@ -4,7 +4,7 @@
     if(!isset($_SESSION)) session_start();
 
     if(!isset($_SESSION["loggedin"])){
-        header("Location: login.php");
+        header("Location: index.php");
         exit;
     }
 ?>
@@ -12,6 +12,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<link rel="stylesheet" href="style.css">
     <style>
         .list {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -48,6 +49,10 @@
             border: 2px solid black; 
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         }
+        .errors{
+            text-align: center;
+            margin: 1% auto;  
+        }
 
     </style>
     <meta charset="UTF-8">
@@ -60,10 +65,13 @@
     <?php
         require_once("connect.php");
         if(isset($_POST["add"])){
-
             $username =mysqli_real_escape_string($kapcsolat, $_POST["username"]); 
             $password_hashed =sha1(mysqli_real_escape_string($kapcsolat, $_POST["password"]));
-            $role =mysqli_real_escape_string($kapcsolat, $_POST["role"]);
+            $gender =mysqli_real_escape_string($kapcsolat, $_POST["gender"]); 
+            $age =mysqli_real_escape_string($kapcsolat, $_POST["age"]); 
+            $role ="member";
+            
+            $sql="INSERT INTO Users(username, password, role, gender, age) VALUES ('$username','$password_hashed', '$role', '$gender','$age')";
             
             $sql="INSERT INTO Users(username, password, role) VALUES ('$username','$password_hashed', '$role')";
             
@@ -102,14 +110,14 @@
     <table class="list">
             <tr>
                 <td>Azonosító</td>
-                <td>Felhazsnálónév</td>
+                <td>Felhasználónév</td>
                 <td>Jelszó (sha1)</td>
                 <td>Szerepkör</td>
             </tr>
         <?php
             while($row = mysqli_fetch_assoc($query)){ ?>
             <tr>
-                <td><?php echo $row["userid"];?></td>
+                <td><?php echo $row["Id"];?></td>
                 <td><?php echo $row["username"];?></td>
                 <td><?php echo $row["password"];?></td>
                 <td><?php echo $row["role"];?></td>
@@ -121,7 +129,7 @@
     <form action="admin.php" method="POST">        
         <table  class="content">
                 <tr>
-                    <td><input type="submit" name="1" value="Hozzáadás"></td>
+                    <td><input type="submit" name="1" value="Hozzáadás" class="button"></td>
                     <td><input type="submit" name="2" value="Törlés"></td>
                     <td><input type="submit" name="3" value="Módosítás"></td>
                 </tr>
@@ -152,6 +160,19 @@
                     <option>member</option>
                     <option>moderator</option>
                 </select>
+                </td>
+            </tr>
+            <tr>
+            <td>Nem:</td>
+                <td>
+                <input type="radio" name="gender" value="ferfi" id="nem"> Férfi
+                <input type="radio" name="gender" value="no" id="nem"> Nő
+                </td>
+            </tr>
+            <tr>
+                <td>Életkor:</td>
+                <td>
+                    <input type="number" name="age" id="kor">
                 </td>
             </tr>
             <tr>
@@ -217,7 +238,7 @@
 <?php } ?>
 
 <?php } ?>
- <a href="main.php"> Vissza a főoldalra</a>
- <a href="logout.php"> Kijelentkezés</a>
+ <a href="main.php"  class="button"> Vissza a főoldalra</a>
+ <a href="logout.php"  class="button"> Kijelentkezés</a>
 </body>
 </html>
