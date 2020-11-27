@@ -1,5 +1,5 @@
 <?php
-
+if(!isset($_SESSION)) session_start();
 ob_start();
 if (isset($_POST["username"]) && isset($_POST["password"]) ) {
 
@@ -13,9 +13,8 @@ if (isset($_POST["username"]) && isset($_POST["password"]) ) {
 
     if(mysqli_num_rows($query)==1){
 
-        if(!isset($_SESSION)) session_start();
-
         $row = $query -> fetch_array(MYSQLI_ASSOC);
+        $_SESSION["userId"]=$row["Id"];
         $_SESSION["username"]=$username;
         $_SESSION["loggedin"]="loggedin";
         $_SESSION["role"]=$row["role"];

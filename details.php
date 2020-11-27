@@ -1,3 +1,5 @@
+<?php if (!isset($_SESSION)) session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,13 +38,16 @@
             text-align: left;
             padding: 8px;
         }
+
+        .comment {
+            margin-top: 20px;
+            width: 80%;
+            height: 2em;
+            font-size: 1.2em;
+            border: 3px solid gray;
+        }
     </style>
 
-    <script>
-        function getKeyPressed(e){
-            alert(e.code)
-        }
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Főoldal</title>
@@ -52,11 +57,14 @@
     <?php
     require_once("connect.php");
     if (isset($_GET["topic"])) {
+
         $topic_id = $_GET["topic"];
         $title_query = "SELECT * FROM topics WHERE Id= $topic_id ";
         $result = mysqli_query($kapcsolat, $title_query);
         $title = $result->fetch_array(MYSQLI_ASSOC);
         echo "<h1>" . $title["Name"] . "</h1>";
+
+        $_SESSION["topicId"] = $topic_id;
 
         $comment_query =
             "SELECT Username, Text, CommentedAt  FROM Comments 
@@ -86,16 +94,15 @@
             echo '                   
                 </table>
             </div>';
-
-            ?>
-            <form>
-                <input type="text" name="comment" onkeypress="getKeyPressed(e)">
-            </form>
-            
-        <?php
         } else {
             echo '<h4>Ehhez a témához nem található komment.</h4>';
-        }
+        } ?>
+
+        <form action="comment.php" method="POST">
+            <input class="comment" type="text" name="comment">
+            <button type="submit">Elküld</button>
+        </form>
+    <?php
     } else {
         echo "<h1>Nem megfelelő téma!</h1>";
     }

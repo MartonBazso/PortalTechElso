@@ -1,3 +1,5 @@
+<?php if (!isset($_SESSION)) session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,8 +39,7 @@
     <h2>Üdvözlünk a Főoldalon!</h2>
     <p><i>Válassz egy témát és inspirálódj!</i></p>
     <?php 
-        require_once("connect.php");         
-
+        require_once("connect.php");   
         $sql = "SELECT * FROM topics ORDER BY Name";
         $result = mysqli_query($kapcsolat, $sql);
         $rows = $result -> fetch_all(MYSQLI_ASSOC);
