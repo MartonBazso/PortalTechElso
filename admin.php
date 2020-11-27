@@ -217,7 +217,7 @@
 <?php } ?>
 
 <?php } ?>
- <a href="index.html"> Vissza a főoldalra</a>
+ <a href="main.php"> Vissza a főoldalra</a>
  <a href="logout.php"> Kijelentkezés</a>
 </body>
 </html>
