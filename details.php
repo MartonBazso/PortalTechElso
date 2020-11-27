@@ -46,14 +46,37 @@
             font-size: 1.2em;
             border: 3px solid gray;
         }
+
+        a {
+            text-align: left;
+            color: black;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 2em;
+            display: block;
+            width: 100%;
+        }
+
+        button{
+            background-color: white;
+            border: none;
+            font-size:2em;
+        }
     </style>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Főoldal</title>
+
+    <script>
+        function deleteComment(id){
+
+        }
+    </script>
 </head>
 
 <body>
+    <a href="main.php">⬅</a>
     <?php
     require_once("connect.php");
     if (isset($_GET["topic"])) {
@@ -67,7 +90,7 @@
         $_SESSION["topicId"] = $topic_id;
 
         $comment_query =
-            "SELECT Username, Text, CommentedAt  FROM Comments 
+            "SELECT Comments.Id, Username, Text, CommentedAt  FROM Comments 
              INNER JOIN Users ON comments.UserId = Users.Id
              WHERE TopicId = $topic_id ORDER BY CommentedAt DESC";
 
@@ -88,8 +111,17 @@
                     <tr>
                         <td>' . $comments[$i]["Username"] . '</td>
                         <td>' . $comments[$i]["Text"] . '</td>
-                        <td>' . $comments[$i]["CommentedAt"] . '</td>
-                    </tr>';
+                        <td>' . $comments[$i]["CommentedAt"] . '</td>';
+                if ($_SESSION["role"] == "moderator") {
+                    echo '<td>
+                    <form action="delete.php" method="POST">
+                        <input type="text" name="commentToDelete" value="' . $comments[$i]["Id"]  . '" hidden>
+                        <button type="submit">🗑️</button>
+                    </form>
+                    </td>';
+                }
+
+                echo '</tr>';
             }
             echo '                   
                 </table>
